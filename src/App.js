@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef, useCallback } from "react";
 
 const initialState = {
   toasts: [],
@@ -79,14 +79,14 @@ function Toast({ dispatch, text, id, timer }) {
     return () => clearInterval(intervalRef.current);
   }, [id, dispatch]);
 
-  // const handleClose = useCallback(() => {
-  //   clearInterval(intervalRef.current);
-  //   dispatch({ type: "inActive", payload: id });
-  // }, [dispatch, id]);
-
-  const handleClose = function () {
+  const handleClose = useCallback(() => {
+    clearInterval(intervalRef.current);
     dispatch({ type: "inActive", payload: id });
-  };
+  }, [dispatch, id]);
+
+  // const handleClose = function () {
+  //   dispatch({ type: "inActive", payload: id });
+  // };
 
   return (
     <div
